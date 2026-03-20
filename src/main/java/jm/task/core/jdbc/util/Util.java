@@ -1,5 +1,7 @@
 package jm.task.core.jdbc.util;
 
+import com.mysql.cj.jdbc.Driver;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,7 +13,11 @@ public class Util {
     private final String PASSWORD = "rootmysql";
 
     public Util() {
-
+        try {
+            DriverManager.registerDriver(new Driver());
+        } catch (SQLException e) {
+            throw new RuntimeException("JDBC driver registration error", e);
+        }
     }
 
     public Connection getConnection() {
